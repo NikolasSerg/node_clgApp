@@ -26,6 +26,7 @@ switch (operation) {
         break;
 }
 function existFile(fileName) {
+    console.log('start cheks exist file');
     if (fs.existsSync(fileName)) {
         console.log(`yeah, allright. file exist. go on`);
     } else {
@@ -37,32 +38,47 @@ function existFile(fileName) {
             }
         })
     }
+    console.log('end cheks exist file');
 }
 function showList(file) {
-    fs.readFile(file, (err, data) => {
-        if (err) {
-            if(err.code === 'ENOENT') {
-                console.log('file dont exist');
-            } else {
-                console.log(`something wrong: ${err}`);
-            }    
-        } else {
-            if(data.toString() == '') {
-                console.log(`empty ${file} file`);
-            } else {
-                let rez = JSON.parse(data);
-                console.log(rez);
-                for (const key in rez) {
-                    if (rez.hasOwnProperty(key)) {
-                        console.log(`${key}: ${rez[key]}`);
-                    }
-                }
-            }
-        }
-    }) 
+    existFile(file);
+    console.log(readFile(file), 'this is test');
+    // let data = fs.readFileSync(file, 'utf-8');
+    // if(data.toString() == '') {
+    //     console.log(`empty ${file} file`);
+    // } else {
+    //     let rez = JSON.parse(data);
+    //     console.log(rez);
+    //     for (const key in rez) {
+    //         if (rez.hasOwnProperty(key)) {
+    //             console.log(`${key}: ${rez[key]}`);
+    //         }
+    //     }
+    // }
 }
+
  function addPost(file, post, desription) {
     existFile(file);
 
     
+ }
+
+ function readFile(file) {
+    let rezult;
+    let data = fs.readFileSync(file, 'utf-8');
+    if(data.toString() == '') {
+        console.log(`empty ${file} file`);
+    } else {
+        let rez = JSON.parse(data);
+        for (const key in rez) {
+            let data = fs.readFileSync(file, 'utf-8');
+            if(data.toString() == '') {
+                console.log(`empty ${file} file`);
+            } else {
+                let rez = JSON.parse(data);
+                rezult = rez;
+            }   
+        }
+    }
+    return rezult;
  }
