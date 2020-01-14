@@ -38,30 +38,7 @@ function existFile(fileName) {
         })
     }
 }
- function readFile(file) {
-     let readableFile;
-    fs.readFile(file, (err, data) => {
-        if (err) {
-            if(err.code === 'ENOENT') {
-                console.log('file dont exist');
-            } else {
-                console.log(`somthing wrong: ${err}`);
-            }    
-        } else {
-            if(data.toString() == '') {
-                console.log(`empty ${file} file`);
-            } else {
-                let rez = JSON.parse(data);
-                console.log(rez);
-                console.log(rez['sdsd']);
-                readableFile = rez;
-                return readableFile;
-            }
-        }
-    }) 
-    let rez = fs.readFileSync(file);
-    console.log(rez.toString());
-    existFile(file);
+function showList(file) {
     fs.readFile(file, (err, data) => {
         if (err) {
             if(err.code === 'ENOENT') {
@@ -74,7 +51,7 @@ function existFile(fileName) {
                 console.log(`empty ${file} file`);
             } else {
                 let rez = JSON.parse(data);
-                // console.log(rez);
+                console.log(rez);
                 for (const key in rez) {
                     if (rez.hasOwnProperty(key)) {
                         console.log(`${key}: ${rez[key]}`);
@@ -82,10 +59,7 @@ function existFile(fileName) {
                 }
             }
         }
-    })
-    // let rez = readFile(file);
-    // console.log(rez, 'rez');
-    
+    }) 
 }
  function addPost(file, post, desription) {
     existFile(file);
