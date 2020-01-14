@@ -1,3 +1,1 @@
-{"apple": "dilicious fruit", 
-"citrus": "lemon, orange and other fruit"
-}
+{"apple":"dilicious fruit","citrus":"lemon, orange and other fruit","post":"else language","java":"else language"}

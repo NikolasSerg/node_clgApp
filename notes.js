@@ -17,7 +17,7 @@ switch (operation) {
         break;
     case 'add':
         console.log("add post");
-        addPost()
+        addPost(file, post, description)
         break;
    
 
@@ -42,25 +42,25 @@ function existFile(fileName) {
 }
 function showList(file) {
     existFile(file);
-    console.log(readFile(file), 'this is test');
-    // let data = fs.readFileSync(file, 'utf-8');
-    // if(data.toString() == '') {
-    //     console.log(`empty ${file} file`);
-    // } else {
-    //     let rez = JSON.parse(data);
-    //     console.log(rez);
-    //     for (const key in rez) {
-    //         if (rez.hasOwnProperty(key)) {
-    //             console.log(`${key}: ${rez[key]}`);
-    //         }
-    //     }
-    // }
+    let data = readFile(file);
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            console.log(`${key}: ${data[key]}`);
+        }
+    }
 }
 
  function addPost(file, post, desription) {
     existFile(file);
-
-    
+    let data = readFile(file);
+    data[post] = description;
+    let dataIn = JSON.stringify(data);
+    fs.writeFile(file, dataIn, (err) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log('write success');
+    })
  }
 
  function readFile(file) {
