@@ -5,41 +5,21 @@ const file = process.argv[3];
 const post = process.argv[4];
 const description = process.argv[5];
 
-// console.log(operation === "list");
-
 switch (operation) {
-    // case create:
-    //     console.log("operation create");
-    //     break;
     case 'list':
         showList(file);
-        // console.log("list method done");
         break;
     case 'add':
-        console.log("add post");
         addPost(file, post, description)
         break;
-   
-
+    case 'delpost':
+        delPost(file, post)
+        break;
     default:
         console.log("don't know this command");
         break;
 }
-function existFile(fileName) {
-    console.log('start cheks exist file');
-    if (fs.existsSync(fileName)) {
-        console.log(`yeah, allright. file exist. go on`);
-    } else {
-        fs.writeFile(fileName,"", (err) => {
-            if (err) {
-                console.log(`sorry but somthing wrong: ${err}`);
-            } else {
-                console.log('its good for you:  file create');
-            }
-        })
-    }
-    console.log('end cheks exist file');
-}
+
 function showList(file) {
     existFile(file);
     let data = readFile(file);
@@ -62,6 +42,43 @@ function showList(file) {
         console.log('write success');
     })
  }
+
+ function delPost(file, post) {
+     existFile(file);
+    let data =  readFile(file);
+    let newData = {};
+    let newDataJson;
+    for (const key in data) {
+        if (data.hasOwnProperty(key) && post !== key) {
+            newData[key] = data[key];
+        }
+    }
+    console.log(newData, " - newData");
+    newDataJson = JSON.stringify(newData);
+    fs.writeFile(file, newDataJson, (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log(`write file ${file} successq`);
+        }
+    })
+}
+
+ function existFile(fileName) {
+    console.log('start cheks exist file');
+    if (fs.existsSync(fileName)) {
+        console.log(`yeah, allright. file exist. go on`);
+    } else {
+        fs.writeFile(fileName,"", (err) => {
+            if (err) {
+                console.log(`sorry but somthing wrong: ${err}`);
+            } else {
+                console.log('its good for you:  file create');
+            }
+        })
+    }
+    console.log('end cheks exist file');
+}
 
  function readFile(file) {
     let rezult;
